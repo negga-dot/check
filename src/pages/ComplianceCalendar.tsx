@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Calendar, Plus, Clock, AlertTriangle, CheckCircle } from 'lucide-react';
 import { useApp } from '../contexts/AppContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import Card from '../components/UI/Card';
 import Button from '../components/UI/Button';
 import type { CalendarEvent } from '../contexts/AppContext';
 
 const ComplianceCalendar: React.FC = () => {
   const { state, dispatch } = useApp();
+  const { t } = useLanguage();
   const [viewMode, setViewMode] = useState<'month' | 'week'>('month');
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showAddModal, setShowAddModal] = useState(false);
@@ -88,6 +90,18 @@ const ComplianceCalendar: React.FC = () => {
     return events.filter(event => event.date === today);
   };
 
+  const getCurrentWeekEvents = () => {
+    const startOfWeek = new Date(selectedDate);
+    startOfWeek.setDate(selectedDate.getDate() - selectedDate.getDay());
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+    
+    return events.filter(event => {
+      const eventDate = new Date(event.date);
+      return eventDate >= startOfWeek && eventDate <= endOfWeek;
+    });
+  };
+
   const getUpcomingEvents = () => {
     const today = new Date();
     const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
@@ -157,13 +171,13 @@ const ComplianceCalendar: React.FC = () => {
       days.push(
         <div
           key={i}
-          className={`min-h-[100px] border border-gray-200 p-2 ${
-            isCurrentMonth ? 'bg-white' : 'bg-gray-50'
+          className={`min-h-[100px] border border-gray-200 dark:border-gray-700 p-2 ${
+            isCurrentMonth ? 'bg-white dark:bg-gray-900' : 'bg-gray-50 dark:bg-gray-800'
           } ${isToday ? 'ring-2 ring-blue-500' : ''}`}
         >
           <div className={`text-sm font-medium mb-1 ${
-            isCurrentMonth ? 'text-gray-900' : 'text-gray-400'
-          } ${isToday ? 'text-blue-600' : ''}`}>
+            isCurrentMonth ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-600'
+          } ${isToday ? 'text-blue-600 dark:text-blue-400' : ''}`}>
             {currentDate.getDate()}
           </div>
           <div className="space-y-1">
@@ -181,6 +195,7 @@ const ComplianceCalendar: React.FC = () => {
             ))}
             {dayEvents.length > 2 && (
               <div className="text-xs text-gray-500">
+                <div className="text-xs text-gray-500 dark:text-gray-400">
                 +{dayEvents.length - 2} more
               </div>
             )}
@@ -192,9 +207,9 @@ const ComplianceCalendar: React.FC = () => {
     }
 
     return (
-      <div className="grid grid-cols-7 border border-gray-200 rounded-lg overflow-hidden">
+      <div className="grid grid-cols-7 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-          <div key={day} className="bg-gray-100 p-3 text-center text-sm font-medium text-gray-700 border-b border-gray-200">
+          <div key={day} className="bg-gray-100 dark:bg-gray-800 p-3 text-center text-sm font-medium text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700">
             {day}
           </div>
         ))}
@@ -203,37 +218,93 @@ const ComplianceCalendar: React.FC = () => {
     );
   };
 
+  const renderWeekView = () => {
+    const weekEvents = getCurrentWeekEvents();
+    const startOfWeek = new Date(selectedDate);
+    startOfWeek.setDate(selectedDate.getDate() - selectedDate.getDay());
+    
+    const days = [];
+    for (let i = 0; i < 7; i++) {
+      const currentDay = new Date(startOfWeek);
+      currentDay.setDate(startOfWeek.getDate() + i);
+      
+      const dayEvents = weekEvents.filter(event => {
+        const eventDate = new Date(event.date);
+        return eventDate.toDateString() === currentDay.toDateString();
+      });
+      
+      const isToday = currentDay.toDateString() === new Date().toDateString();
+      
+      days.push(
+        <div key={i} className="border border-gray-200 dark:border-gray-700 min-h-[200px]">
+          <div className={`p-3 border-b border-gray-200 dark:border-gray-700 ${
+            isToday ? 'bg-blue-50 dark:bg-blue-900/20' : 'bg-gray-50 dark:bg-gray-800'
+          }`}>
+            <div className="text-sm font-medium text-gray-900 dark:text-white">
+              {currentDay.toLocaleDateString('en-US', { weekday: 'short' })}
+            </div>
+            <div className={`text-lg font-bold ${
+              isToday ? 'text-blue-600 dark:text-blue-400' : 'text-gray-900 dark:text-white'
+            }`}>
+              {currentDay.getDate()}
+            </div>
+          </div>
+          <div className="p-2 space-y-1">
+            {dayEvents.map(event => (
+              <div
+                key={event.id}
+                className={`text-xs p-2 rounded text-white cursor-pointer ${
+                  eventTypes[event.type].color
+                } ${event.completed ? 'opacity-50 line-through' : ''}`}
+                onClick={() => toggleEventCompletion(event.id)}
+                title={event.description}
+              >
+                {event.title}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    
+    return (
+      <div className="grid grid-cols-7 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+        {days}
+      </div>
+    );
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="container">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Compliance Calendar</h1>
-            <p className="text-gray-600">Never miss a deadline or renewal date</p>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{t('calendar.title')}</h1>
+            <p className="text-gray-600 dark:text-gray-300">{t('calendar.subtitle')}</p>
           </div>
           
           <div className="flex items-center space-x-3">
-            <div className="flex items-center space-x-1 bg-gray-100 rounded-lg p-1">
+            <div className="flex items-center space-x-1 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
               <button
                 onClick={() => setViewMode('month')}
                 className={`px-3 py-2 text-sm rounded-md transition-colors ${
-                  viewMode === 'month' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'
+                  viewMode === 'month' ? 'bg-white dark:bg-gray-700 shadow-sm text-gray-900 dark:text-white' : 'hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300'
                 }`}
               >
-                Month
+                {t('calendar.month')}
               </button>
               <button
                 onClick={() => setViewMode('week')}
                 className={`px-3 py-2 text-sm rounded-md transition-colors ${
-                  viewMode === 'week' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'
+                  viewMode === 'week' ? 'bg-white dark:bg-gray-700 shadow-sm text-gray-900 dark:text-white' : 'hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300'
                 }`}
               >
-                Week
+                {t('calendar.week')}
               </button>
             </div>
             <Button icon={Plus} onClick={() => setShowAddModal(true)}>
-              Add Event
+              {t('calendar.add')}
             </Button>
           </div>
         </div>
@@ -243,8 +314,11 @@ const ComplianceCalendar: React.FC = () => {
           <div className="lg:col-span-3">
             <Card>
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-semibold text-gray-900">
-                  {selectedDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                  {viewMode === 'month' 
+                    ? selectedDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+                    : `Week of ${selectedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`
+                  }
                 </h2>
                 <div className="flex space-x-2">
                   <Button
@@ -252,7 +326,7 @@ const ComplianceCalendar: React.FC = () => {
                     size="sm"
                     onClick={() => {
                       const newDate = new Date(selectedDate);
-                      newDate.setMonth(newDate.getMonth() - 1);
+                      viewMode === 'month' ? newDate.setMonth(newDate.getMonth() - 1) : newDate.setDate(newDate.getDate() - 7);
                       setSelectedDate(newDate);
                     }}
                   >
@@ -263,7 +337,7 @@ const ComplianceCalendar: React.FC = () => {
                     size="sm"
                     onClick={() => {
                       const newDate = new Date(selectedDate);
-                      newDate.setMonth(newDate.getMonth() + 1);
+                      viewMode === 'month' ? newDate.setMonth(newDate.getMonth() + 1) : newDate.setDate(newDate.getDate() + 7);
                       setSelectedDate(newDate);
                     }}
                   >
@@ -271,7 +345,7 @@ const ComplianceCalendar: React.FC = () => {
                   </Button>
                 </div>
               </div>
-              {renderCalendarGrid()}
+              {viewMode === 'month' ? renderCalendarGrid() : renderWeekView()}
             </Card>
           </div>
 
@@ -279,10 +353,10 @@ const ComplianceCalendar: React.FC = () => {
           <div className="space-y-6">
             {/* Today's Tasks */}
             <Card>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Today's Tasks</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('calendar.today')}</h3>
               <div className="space-y-3">
                 {getTodayEvents().length === 0 ? (
-                  <p className="text-gray-500 text-sm">No tasks for today</p>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm">No tasks for today</p>
                 ) : (
                   getTodayEvents().map(event => {
                     const PriorityIcon = priorityConfig[event.priority].icon;
@@ -296,10 +370,10 @@ const ComplianceCalendar: React.FC = () => {
                       >
                         <div className="flex items-start justify-between">
                           <div className="flex-1 min-w-0">
-                            <h4 className={`font-medium text-sm ${event.completed ? 'line-through' : ''}`}>
+                            <h4 className={`font-medium text-sm text-gray-900 dark:text-white ${event.completed ? 'line-through' : ''}`}>
                               {event.title}
                             </h4>
-                            <p className="text-xs mt-1 opacity-75">{event.description}</p>
+                            <p className="text-xs mt-1 opacity-75 text-gray-600 dark:text-gray-300">{event.description}</p>
                           </div>
                           <PriorityIcon className="h-4 w-4 flex-shrink-0" />
                         </div>
@@ -312,17 +386,17 @@ const ComplianceCalendar: React.FC = () => {
 
             {/* Upcoming Events */}
             <Card>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Upcoming (7 days)</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('calendar.upcoming')}</h3>
               <div className="space-y-3">
                 {getUpcomingEvents().length === 0 ? (
-                  <p className="text-gray-500 text-sm">No upcoming events</p>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm">No upcoming events</p>
                 ) : (
                   getUpcomingEvents().map(event => (
-                    <div key={event.id} className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded-lg">
+                    <div key={event.id} className="flex items-center space-x-3 p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">
                       <div className={`w-3 h-3 rounded-full ${eventTypes[event.type].color}`} />
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-sm font-medium text-gray-900 truncate">{event.title}</h4>
-                        <p className="text-xs text-gray-500">
+                        <h4 className="text-sm font-medium text-gray-900 dark:text-white truncate">{event.title}</h4>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
                           {new Date(event.date).toLocaleDateString()}
                         </p>
                       </div>
@@ -334,12 +408,12 @@ const ComplianceCalendar: React.FC = () => {
 
             {/* Legend */}
             <Card>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Event Types</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Event Types</h3>
               <div className="space-y-2">
                 {Object.entries(eventTypes).map(([type, config]) => (
                   <div key={type} className="flex items-center space-x-3">
                     <div className={`w-3 h-3 rounded-full ${config.color}`} />
-                    <span className="text-sm text-gray-700">{config.label}</span>
+                    <span className="text-sm text-gray-700 dark:text-gray-300">{config.label}</span>
                   </div>
                 ))}
               </div>
@@ -351,10 +425,10 @@ const ComplianceCalendar: React.FC = () => {
         {showAddModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
             <Card className="w-full max-w-md">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Add New Event</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Add New Event</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Event Title *
                   </label>
                   <input
@@ -367,7 +441,7 @@ const ComplianceCalendar: React.FC = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Date *
                   </label>
                   <input
@@ -380,7 +454,7 @@ const ComplianceCalendar: React.FC = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       Type
                     </label>
                     <select
@@ -396,7 +470,7 @@ const ComplianceCalendar: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       Priority
                     </label>
                     <select
@@ -412,7 +486,7 @@ const ComplianceCalendar: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Description
                   </label>
                   <textarea
@@ -427,7 +501,7 @@ const ComplianceCalendar: React.FC = () => {
               
               <div className="flex space-x-3 mt-6">
                 <Button variant="outline" onClick={() => setShowAddModal(false)} className="flex-1">
-                  Cancel
+                  {t('common.cancel')}
                 </Button>
                 <Button onClick={handleAddEvent} className="flex-1">
                   Add Event

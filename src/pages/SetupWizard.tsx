@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, ArrowLeft, CheckCircle, Building, Store, Utensils, Package, Briefcase } from 'lucide-react';
 import { useApp } from '../contexts/AppContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import Card from '../components/UI/Card';
 import Button from '../components/UI/Button';
 import ProgressBar from '../components/UI/ProgressBar';
@@ -10,6 +11,7 @@ import type { UserData, Approval } from '../contexts/AppContext';
 const SetupWizard: React.FC = () => {
   const navigate = useNavigate();
   const { dispatch } = useApp();
+  const { t } = useLanguage();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     businessType: '',
@@ -23,35 +25,35 @@ const SetupWizard: React.FC = () => {
   const businessTypes = [
     {
       id: 'manufacturing',
-      title: 'MSME Manufacturing',
+      title: t('wizard.business.manufacturing'),
       description: 'Product manufacturing, assembly, or production business',
       icon: Building,
       approvals: ['Udyam Registration', 'DPCC NOC', 'Factory License', 'GST Registration', 'Fire NOC', 'Labor License'],
     },
     {
       id: 'service',
-      title: 'Service Company',
+      title: t('wizard.business.service'),
       description: 'IT, consulting, professional services, or digital business',
       icon: Briefcase,
       approvals: ['Company Registration', 'GST Registration', 'DPIIT Recognition', 'Professional Tax', 'ESI/PF Registration'],
     },
     {
       id: 'food',
-      title: 'Food Business',
+      title: t('wizard.business.food'),
       description: 'Restaurant, food processing, or catering business',
       icon: Utensils,
       approvals: ['FSSAI License', 'Trade License', 'GST Registration', 'Fire NOC', 'Health Permit', 'Water NOC'],
     },
     {
       id: 'export',
-      title: 'Export Business',
+      title: t('wizard.business.export'),
       description: 'Import/export or international trade business',
       icon: Package,
       approvals: ['IEC Code', 'GST Registration', 'Company Registration', 'RCMC Certificate', 'Bank Certificate'],
     },
     {
       id: 'retail',
-      title: 'Retail Store',
+      title: t('wizard.business.retail'),
       description: 'Physical retail, e-commerce, or wholesale business',
       icon: Store,
       approvals: ['Trade License', 'GST Registration', 'Shop & Establishment', 'Fire NOC', 'Signage Permit'],
@@ -173,8 +175,8 @@ const SetupWizard: React.FC = () => {
 
   const renderStep1 = () => (
     <div className="animate-fade-in">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-        What type of business are you starting?
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+        {t('wizard.step1.title')}
       </h2>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {businessTypes.map((type) => (
@@ -197,8 +199,8 @@ const SetupWizard: React.FC = () => {
                 </div>
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">{type.title}</h3>
-              <p className="text-gray-600 text-sm mb-4">{type.description}</p>
-              <div className="text-xs text-gray-500">
+              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{type.description}</p>
+              <div className="text-xs text-gray-500 dark:text-gray-400">
                 <span className="font-medium">{type.approvals.length} approvals required</span>
               </div>
             </div>
@@ -210,12 +212,12 @@ const SetupWizard: React.FC = () => {
 
   const renderStep2 = () => (
     <div className="animate-fade-in max-w-2xl mx-auto">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-        Tell us about your business
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+        {t('wizard.step2.title')}
       </h2>
       <div className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Company Name *
           </label>
           <input
@@ -229,7 +231,7 @@ const SetupWizard: React.FC = () => {
         </div>
         
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Business Address *
           </label>
           <textarea
@@ -244,7 +246,7 @@ const SetupWizard: React.FC = () => {
 
         <div className="grid sm:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Business Sector
             </label>
             <select
@@ -265,7 +267,7 @@ const SetupWizard: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Expected Investment
             </label>
             <select
@@ -283,7 +285,7 @@ const SetupWizard: React.FC = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Number of Founders
           </label>
           <input
@@ -305,8 +307,8 @@ const SetupWizard: React.FC = () => {
 
     return (
       <div className="animate-fade-in">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-          Required Approvals for {selectedType.title}
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+          {t('wizard.step3.title')} for {selectedType.title}
         </h2>
         <div className="max-w-4xl mx-auto">
           <div className="grid md:grid-cols-2 gap-6">
@@ -318,11 +320,11 @@ const SetupWizard: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-1">{approval}</h3>
-                  <p className="text-sm text-gray-600 mb-2">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{approval}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
                     {getDepartmentByApproval(approval)}
                   </p>
-                  <div className="flex items-center text-sm text-gray-500">
+                  <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
                     <span className="mr-4">⏱️ {getTimelineByApproval(approval)}</span>
                     <span>📄 {getDocsByApproval(approval).length} docs</span>
                   </div>
@@ -332,13 +334,13 @@ const SetupWizard: React.FC = () => {
           </div>
           <Card className="mt-8 bg-blue-50 border-blue-200">
             <div className="text-center">
-              <h3 className="text-lg font-semibold text-blue-900 mb-2">
+              <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-2">
                 Estimated Total Timeline
               </h3>
-              <p className="text-2xl font-bold text-blue-600 mb-2">
+              <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
                 2-4 months
               </p>
-              <p className="text-sm text-blue-700">
+              <p className="text-sm text-blue-700 dark:text-blue-300">
                 With LaunchMate's guidance, you can reduce this by 60% and track everything in real-time
               </p>
             </div>
@@ -352,35 +354,35 @@ const SetupWizard: React.FC = () => {
     <div className="animate-fade-in text-center max-w-2xl mx-auto">
       <div className="mb-8">
         <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">
-          Your Setup Plan is Ready!
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          {t('wizard.step4.title')}
         </h2>
-        <p className="text-lg text-gray-600">
+        <p className="text-lg text-gray-600 dark:text-gray-300">
           We've created a personalized compliance roadmap for your {businessTypes.find(t => t.id === formData.businessType)?.title.toLowerCase()}.
         </p>
       </div>
 
       <div className="space-y-6">
         <Card className="text-left">
-          <h3 className="font-semibold text-gray-900 mb-4">Next Steps:</h3>
+          <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Next Steps:</h3>
           <div className="space-y-3">
             <div className="flex items-center space-x-3">
               <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
                 <span className="text-xs font-semibold text-green-600">1</span>
               </div>
-              <span className="text-gray-700">Review your approval tracker dashboard</span>
+              <span className="text-gray-700 dark:text-gray-300">Review your approval tracker dashboard</span>
             </div>
             <div className="flex items-center space-x-3">
               <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
                 <span className="text-xs font-semibold text-blue-600">2</span>
               </div>
-              <span className="text-gray-700">Start gathering required documents</span>
+              <span className="text-gray-700 dark:text-gray-300">Start gathering required documents</span>
             </div>
             <div className="flex items-center space-x-3">
               <div className="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center">
                 <span className="text-xs font-semibold text-orange-600">3</span>
               </div>
-              <span className="text-gray-700">Explore funding schemes and apply</span>
+              <span className="text-gray-700 dark:text-gray-300">Explore funding schemes and apply</span>
             </div>
           </div>
         </Card>
@@ -410,7 +412,7 @@ const SetupWizard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="container max-w-6xl">
         <div className="mb-8">
           <ProgressBar current={currentStep} total={4} className="max-w-md mx-auto" />
@@ -431,7 +433,7 @@ const SetupWizard: React.FC = () => {
               disabled={currentStep === 1}
               icon={ArrowLeft}
             >
-              Previous
+              {t('common.previous')}
             </Button>
             <Button
               onClick={handleNext}
@@ -439,7 +441,7 @@ const SetupWizard: React.FC = () => {
               icon={ArrowRight}
               iconPosition="right"
             >
-              {currentStep === 3 ? 'Create Plan' : 'Next'}
+              {currentStep === 3 ? 'Create Plan' : t('common.next')}
             </Button>
           </div>
         )}

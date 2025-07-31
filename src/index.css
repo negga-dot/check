@@ -8,8 +8,12 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans transition-colors;
     font-family: 'Inter', sans-serif;
+  }
+  
+  html.dark {
+    color-scheme: dark;
   }
 }
 
@@ -85,7 +89,7 @@
 }
 
 .input-field {
-  @apply w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 min-h-[44px];
+  @apply w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 min-h-[44px] bg-white dark:bg-gray-800 text-gray-900 dark:text-white;
 }
 
 @media (max-width: 640px) {

@@ -47,32 +47,32 @@ const Footer: React.FC = () => {
                 {t('footer.links.home')}
               </Link>
               <Link to="/wizard" className="block text-gray-400 hover:text-white text-sm transition-colors">
-                Setup Wizard
+                {t('nav.wizard')}
               </Link>
               <Link to="/schemes" className="block text-gray-400 hover:text-white text-sm transition-colors">
-                Funding Schemes
+                {t('nav.schemes')}
               </Link>
               <Link to="/chat" className="block text-gray-400 hover:text-white text-sm transition-colors">
-                AI Assistant
+                {t('nav.chat')}
               </Link>
             </div>
           </div>
 
           {/* Legal Links */}
           <div className="lg:col-span-1">
-            <h3 className="font-semibold mb-4">Legal</h3>
+            <h3 className="font-semibold mb-4">{t('footer.legal') || 'Legal'}</h3>
             <div className="space-y-2">
               <a href="#" className="block text-gray-400 hover:text-white text-sm transition-colors">
                 {t('footer.links.privacy')}
               </a>
               <a href="#" className="block text-gray-400 hover:text-white text-sm transition-colors">
-                Terms of Service
+                {t('footer.links.terms')}
               </a>
               <a href="#" className="block text-gray-400 hover:text-white text-sm transition-colors">
                 {t('footer.links.contact')}
               </a>
               <a href="#" className="block text-gray-400 hover:text-white text-sm transition-colors">
-                Support
+                {t('footer.links.support')}
               </a>
             </div>
           </div>

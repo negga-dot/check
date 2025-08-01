@@ -80,25 +80,25 @@ const Header: React.FC = () => {
                 <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
                   <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
                     <p className="text-sm font-medium text-gray-900 dark:text-white">Data Management</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">No login required — your progress stays saved on your device.</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{t('header.dataDesc') || 'No login required — your progress stays saved on your device.'}</p>
                   </div>
                   <button
                     onClick={() => { saveProgress(); setShowDataMenu(false); }}
                     className="w-full flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                   >
                     <Save className="h-4 w-4 mr-3" />
-                    Save My Progress
+                    {t('header.saveProgress') || 'Save My Progress'}
                   </button>
                   <button
                     onClick={() => { exportData(); setShowDataMenu(false); }}
                     className="w-full flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                   >
                     <Download className="h-4 w-4 mr-3" />
-                    Export My Data
+                    {t('header.exportData') || 'Export My Data'}
                   </button>
                   <label className="w-full flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer">
                     <Upload className="h-4 w-4 mr-3" />
-                    Import Data
+                    {t('header.importData') || 'Import Data'}
                     <input
                       type="file"
                       accept=".json"
@@ -111,7 +111,7 @@ const Header: React.FC = () => {
                     className="w-full flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                   >
                     <Cloud className="h-4 w-4 mr-3" />
-                    Backup to Cloud
+                    {t('header.backupCloud') || 'Backup to Cloud'}
                   </button>
                 </div>
               )}
@@ -203,7 +203,7 @@ const Header: React.FC = () => {
               {/* Mobile Controls */}
               <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 px-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Theme</span>
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('header.theme') || 'Theme'}</span>
                   <button
                     onClick={toggleTheme}
                     className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
@@ -212,7 +212,7 @@ const Header: React.FC = () => {
                   </button>
                 </div>
                 <div className="flex items-center justify-between mt-3">
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Language</span>
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('header.language') || 'Language'}</span>
                   <select
                     value={language}
                     onChange={(e) => setLanguage(e.target.value as 'en' | 'hi')}
@@ -224,10 +224,10 @@ const Header: React.FC = () => {
                 </div>
                 <div className="mt-4 space-y-2">
                   <Button variant="outline" size="sm" onClick={saveProgress} className="w-full justify-start" icon={Save}>
-                    Save Progress
+                    {t('header.saveProgress') || 'Save Progress'}
                   </Button>
                   <Button variant="outline" size="sm" onClick={exportData} className="w-full justify-start" icon={Download}>
-                    Export Data
+                    {t('header.exportData') || 'Export Data'}
                   </Button>
                 </div>
               </div>

@@ -289,7 +289,7 @@ Director
                   <div className="flex items-center">
                     <AlertCircle className="h-5 w-5 text-orange-500 mr-2" />
                     <span className="text-sm text-orange-700 dark:text-orange-300">
-                      {getMissingFieldsCount()} fields missing - Complete all fields to unlock document generation
+                      {getMissingFieldsCount()} {t('documents.fieldsComplete')}
                     </span>
                   </div>
                 </div>
@@ -298,7 +298,7 @@ Director
               <form className="space-y-6">
                 {requiredFields.map((field) => (
                   <div key={field.key}>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       {field.label}
                     </label>
                     {field.type === 'textarea' ? (
@@ -361,7 +361,7 @@ Director
           <div className="space-y-6">
             {/* Available Documents */}
             <Card>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Available Documents</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('documents.availableDocuments')}</h3>
               <div className="space-y-4">
                 {documents.map((doc) => {
                   const canGenerate = canGenerateDocument(doc);
@@ -402,7 +402,7 @@ Director
                                   icon={Eye}
                                   onClick={() => setActiveDocument(doc.id)}
                                 >
-                                  Preview
+                                  {t('documents.preview')}
                                 </Button>
                                 <Button
                                   size="sm"
@@ -410,12 +410,12 @@ Director
                                   icon={isGenerated ? Download : FileText}
                                   onClick={() => generateDocument(doc.id)}
                                 >
-                                  {isGenerated ? 'Download' : 'Generate'}
+                                  {isGenerated ? t('documents.download') : t('documents.generate')}
                                 </Button>
                               </div>
                             ) : (
                               <span className="text-xs text-red-600 dark:text-red-400">
-                                Missing fields
+                                {t('documents.missingFields')}
                               </span>
                             )}
                           </div>
@@ -430,10 +430,10 @@ Director
             {/* Legal Language Simplifier */}
             <Card>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Legal Language Simplifier
+                {t('documents.legalSimplifier') || 'Legal Language Simplifier'}
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                Convert complex legal jargon into plain English for better understanding.
+                {t('documents.legalSimplifierDesc') || 'Convert complex legal jargon into plain English for better understanding.'}
               </p>
               <div className="space-y-3">
                 <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
@@ -456,23 +456,23 @@ Director
 
             {/* Help & Tips */}
             <Card>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Tips</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('documents.tips')}</h3>
               <div className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
                 <div className="flex items-start space-x-2">
                   <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <p>Keep your PAN and Aadhaar details handy for quick form filling</p>
+                  <p>{t('documents.tip1') || 'Keep your PAN and Aadhaar details handy for quick form filling'}</p>
                 </div>
                 <div className="flex items-start space-x-2">
                   <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <p>Use your registered office address consistently across all documents</p>
+                  <p>{t('documents.tip2') || 'Use your registered office address consistently across all documents'}</p>
                 </div>
                 <div className="flex items-start space-x-2">
                   <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <p>Review generated documents before submitting to authorities</p>
+                  <p>{t('documents.tip3') || 'Review generated documents before submitting to authorities'}</p>
                 </div>
                 <div className="flex items-start space-x-2">
                   <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <p>Save generated documents for future reference and modifications</p>
+                  <p>{t('documents.tip4') || 'Save generated documents for future reference and modifications'}</p>
                 </div>
               </div>
             </Card>

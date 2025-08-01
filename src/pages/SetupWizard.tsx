@@ -184,21 +184,21 @@ const SetupWizard: React.FC = () => {
             key={type.id}
             hover
             className={`cursor-pointer transition-all ${
-              formData.businessType === type.id ? 'ring-2 ring-blue-500 bg-blue-50' : ''
+              formData.businessType === type.id ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-900/20' : ''
             }`}
             onClick={() => setFormData({ ...formData, businessType: type.id })}
           >
             <div className="text-center">
               <div className="mb-4 flex justify-center">
                 <div className={`p-3 rounded-xl ${
-                  formData.businessType === type.id ? 'bg-blue-500' : 'bg-gray-100'
+                  formData.businessType === type.id ? 'bg-blue-500' : 'bg-gray-100 dark:bg-gray-700'
                 }`}>
                   <type.icon className={`h-8 w-8 ${
-                    formData.businessType === type.id ? 'text-white' : 'text-gray-600'
+                    formData.businessType === type.id ? 'text-white' : 'text-gray-600 dark:text-gray-300'
                   }`} />
                 </div>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">{type.title}</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{type.title}</h3>
               <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{type.description}</p>
               <div className="text-xs text-gray-500 dark:text-gray-400">
                 <span className="font-medium">{type.approvals.length} approvals required</span>

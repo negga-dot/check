@@ -83,7 +83,7 @@ const Dashboard: React.FC = () => {
   const renderWelcomeSection = () => {
     if (!state.user) {
       return (
-        <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+        <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0">
           <div className="text-center py-8">
             <h2 className="text-2xl font-bold mb-4">Welcome to LaunchMate!</h2>
             <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
@@ -121,15 +121,15 @@ const Dashboard: React.FC = () => {
         <div className="grid sm:grid-cols-3 gap-6">
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600 mb-1">{completedApprovals}</div>
-            <div className="text-sm text-gray-600">Completed</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Completed</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-orange-600 mb-1">{pendingApprovals}</div>
-            <div className="text-sm text-gray-600">Pending</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Pending</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600 mb-1">{state.schemes.length}</div>
-            <div className="text-sm text-gray-600">Saved Schemes</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">Saved Schemes</div>
           </div>
         </div>
 
@@ -143,7 +143,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 transition-colors">
       <div className="container">
         {/* Welcome Section */}
         <div className="mb-8">

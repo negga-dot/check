@@ -234,12 +234,12 @@ const SchemeRecommender: React.FC = () => {
   const hasFilters = Object.values(filters).some(value => value !== '');
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 transition-colors">
       <div className="container">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Scheme Recommender</h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Scheme Recommender</h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Discover government schemes and funding opportunities tailored to your business profile
           </p>
         </div>
@@ -247,7 +247,7 @@ const SchemeRecommender: React.FC = () => {
         {/* Filters */}
         <Card className="mb-8">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">Find Your Perfect Scheme</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Find Your Perfect Scheme</h2>
             <Button
               variant="outline"
               size="sm"
@@ -330,7 +330,7 @@ const SchemeRecommender: React.FC = () => {
           )}
 
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-gray-500" />
             <input
               type="text"
               placeholder="Search schemes by name or description..."
@@ -374,19 +374,19 @@ const SchemeRecommender: React.FC = () => {
           <Card>
             <div className="text-center">
               <div className="text-2xl font-bold text-green-600 mb-1">{eligibleSchemes.length}</div>
-              <div className="text-sm text-gray-600">Eligible Schemes</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Eligible Schemes</div>
             </div>
           </Card>
           <Card>
             <div className="text-center">
               <div className="text-2xl font-bold text-yellow-600 mb-1">{state.schemes.length}</div>
-              <div className="text-sm text-gray-600">Saved Schemes</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Saved Schemes</div>
             </div>
           </Card>
           <Card>
             <div className="text-center">
               <div className="text-2xl font-bold text-blue-600 mb-1">{filteredSchemes.length}</div>
-              <div className="text-sm text-gray-600">Total Available</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Total Available</div>
             </div>
           </Card>
         </div>

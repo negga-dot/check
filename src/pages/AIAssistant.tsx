@@ -312,7 +312,7 @@ Ask me anything about starting your business in Delhi!`,
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 transition-colors">
       <div className="container max-w-4xl">
         {/* Header */}
         <div className="text-center mb-8">
@@ -321,8 +321,8 @@ Ask me anything about starting your business in Delhi!`,
               <Bot className="h-8 w-8 text-white" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">AI Compliance Assistant</h1>
-          <p className="text-gray-600">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">AI Compliance Assistant</h1>
+          <p className="text-gray-600 dark:text-gray-300">
             Get instant answers to your startup compliance questions
           </p>
         </div>
@@ -333,18 +333,18 @@ Ask me anything about starting your business in Delhi!`,
             {/* Quick Questions */}
             {state.chatHistory.length <= 1 && (
               <Card>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Popular Questions</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Popular Questions</h3>
                 <div className="grid md:grid-cols-2 gap-3">
                   {predefinedQuestions.map((item, index) => (
                     <button
                       key={index}
                       onClick={() => sendMessage(item.question)}
-                      className="flex items-start space-x-3 p-3 text-left bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+                      className="flex items-start space-x-3 p-3 text-left bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg transition-colors"
                     >
                       <item.icon className="h-5 w-5 text-blue-500 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="text-sm font-medium text-gray-900">{item.question}</p>
-                        <p className="text-xs text-gray-500">{item.category}</p>
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">{item.question}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">{item.category}</p>
                       </div>
                     </button>
                   ))}
@@ -365,12 +365,12 @@ Ask me anything about starting your business in Delhi!`,
                     <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
                       message.sender === 'user' 
                         ? 'bg-blue-500' 
-                        : 'bg-gray-200'
+                        : 'bg-gray-200 dark:bg-gray-700'
                     }`}>
                       {message.sender === 'user' ? (
                         <User className="h-4 w-4 text-white" />
                       ) : (
-                        <Bot className="h-4 w-4 text-gray-600" />
+                        <Bot className="h-4 w-4 text-gray-600 dark:text-gray-300" />
                       )}
                     </div>
                     <div className={`flex-1 max-w-xs lg:max-w-md ${
@@ -379,14 +379,14 @@ Ask me anything about starting your business in Delhi!`,
                       <div className={`inline-block p-3 rounded-lg ${
                         message.sender === 'user'
                           ? 'bg-blue-500 text-white'
-                          : 'bg-gray-100 text-gray-900'
+                          : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
                       }`}>
                         <div 
                           className="text-sm whitespace-pre-wrap"
                           dangerouslySetInnerHTML={{ __html: formatMessage(message.message) }}
                         />
                       </div>
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                         {new Date(message.timestamp).toLocaleTimeString()}
                       </p>
                     </div>
@@ -395,14 +395,14 @@ Ask me anything about starting your business in Delhi!`,
 
                 {isTyping && (
                   <div className="flex items-start space-x-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                      <Bot className="h-4 w-4 text-gray-600" />
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                      <Bot className="h-4 w-4 text-gray-600 dark:text-gray-300" />
                     </div>
-                    <div className="bg-gray-100 rounded-lg p-3">
+                    <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3">
                       <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                        <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                        <div className="w-2 h-2 bg-gray-500 dark:bg-gray-400 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-gray-500 dark:bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                        <div className="w-2 h-2 bg-gray-500 dark:bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                       </div>
                     </div>
                   </div>
@@ -412,7 +412,7 @@ Ask me anything about starting your business in Delhi!`,
               </div>
 
               {/* Input Area */}
-              <div className="border-t p-4">
+              <div className="border-t border-gray-200 dark:border-gray-700 p-4">
                 <div className="flex space-x-3">
                   <input
                     type="text"
@@ -439,16 +439,16 @@ Ask me anything about starting your business in Delhi!`,
           <div className="space-y-6">
             {/* Quick Actions */}
             <Card>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
               <div className="space-y-3">
                 {quickActions.map((action, index) => (
                   <button
                     key={index}
                     onClick={() => handleQuickAction(action.action)}
-                    className="w-full flex items-center space-x-3 p-3 text-left bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+                    className="w-full flex items-center space-x-3 p-3 text-left bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg transition-colors"
                   >
                     <action.icon className="h-5 w-5 text-blue-500" />
-                    <span className="text-sm font-medium text-gray-900">{action.label}</span>
+                    <span className="text-sm font-medium text-gray-900 dark:text-white">{action.label}</span>
                   </button>
                 ))}
               </div>
@@ -456,23 +456,23 @@ Ask me anything about starting your business in Delhi!`,
 
             {/* Help Topics */}
             <Card>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Help Topics</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Help Topics</h3>
               <div className="space-y-2 text-sm">
-                <p className="text-gray-600">• Company Registration</p>
-                <p className="text-gray-600">• GST Registration</p>
-                <p className="text-gray-600">• FSSAI License</p>
-                <p className="text-gray-600">• Trade License</p>
-                <p className="text-gray-600">• DPIIT Recognition</p>
-                <p className="text-gray-600">• Government Schemes</p>
-                <p className="text-gray-600">• Compliance Calendar</p>
-                <p className="text-gray-600">• Document Requirements</p>
+                <p className="text-gray-600 dark:text-gray-300">• Company Registration</p>
+                <p className="text-gray-600 dark:text-gray-300">• GST Registration</p>
+                <p className="text-gray-600 dark:text-gray-300">• FSSAI License</p>
+                <p className="text-gray-600 dark:text-gray-300">• Trade License</p>
+                <p className="text-gray-600 dark:text-gray-300">• DPIIT Recognition</p>
+                <p className="text-gray-600 dark:text-gray-300">• Government Schemes</p>
+                <p className="text-gray-600 dark:text-gray-300">• Compliance Calendar</p>
+                <p className="text-gray-600 dark:text-gray-300">• Document Requirements</p>
               </div>
             </Card>
 
             {/* Contact Support */}
             <Card>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Need Human Help?</h3>
-              <p className="text-sm text-gray-600 mb-4">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Need Human Help?</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
                 For complex queries, reach out to our compliance experts.
               </p>
               <Button variant="outline" size="sm" className="w-full">

@@ -194,12 +194,12 @@ const ApprovalTracker: React.FC = () => {
 
   if (state.approvals.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 transition-colors">
         <div className="container">
           <Card className="text-center py-16">
-            <AlertCircle className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">No Approvals Found</h2>
-            <p className="text-gray-600 mb-8">
+            <AlertCircle className="h-16 w-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">No Approvals Found</h2>
+            <p className="text-gray-600 dark:text-gray-300 mb-8">
               Start by completing the setup wizard to generate your personalized approval list.
             </p>
             <Button onClick={() => window.location.href = '/wizard'}>
@@ -212,28 +212,28 @@ const ApprovalTracker: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 transition-colors">
       <div className="container">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Approval Tracker</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Approval Tracker</h1>
           <div className="grid sm:grid-cols-3 gap-6 mb-6">
             <Card>
               <div className="text-center">
                 <div className="text-2xl font-bold text-blue-600 mb-1">{completedCount}</div>
-                <div className="text-sm text-gray-600">Completed</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Completed</div>
               </div>
             </Card>
             <Card>
               <div className="text-center">
                 <div className="text-2xl font-bold text-orange-600 mb-1">{totalCount - completedCount}</div>
-                <div className="text-sm text-gray-600">Pending</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Pending</div>
               </div>
             </Card>
             <Card>
               <div className="text-center">
-                <div className="text-2xl font-bold text-gray-900 mb-1">{totalCount}</div>
-                <div className="text-sm text-gray-600">Total</div>
+                <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">{totalCount}</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Total</div>
               </div>
             </Card>
           </div>
@@ -244,11 +244,11 @@ const ApprovalTracker: React.FC = () => {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
-              <Filter className="h-5 w-5 text-gray-400" />
+              <Filter className="h-5 w-5 text-gray-400 dark:text-gray-500" />
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
               >
                 <option value="all">All Approvals</option>
                 <option value="pending">Pending</option>
@@ -261,18 +261,18 @@ const ApprovalTracker: React.FC = () => {
               <button
                 onClick={() => setViewMode('card')}
                 className={`p-2 rounded-md transition-colors ${
-                  viewMode === 'card' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'
+                  viewMode === 'card' ? 'bg-white dark:bg-gray-700 shadow-sm' : 'hover:bg-gray-200 dark:hover:bg-gray-600'
                 }`}
               >
-                <Grid className="h-4 w-4" />
+                <Grid className="h-4 w-4 text-gray-600 dark:text-gray-300" />
               </button>
               <button
                 onClick={() => setViewMode('table')}
                 className={`p-2 rounded-md transition-colors ${
-                  viewMode === 'table' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'
+                  viewMode === 'table' ? 'bg-white dark:bg-gray-700 shadow-sm' : 'hover:bg-gray-200 dark:hover:bg-gray-600'
                 }`}
               >
-                <List className="h-4 w-4" />
+                <List className="h-4 w-4 text-gray-600 dark:text-gray-300" />
               </button>
             </div>
           </div>

@@ -52,7 +52,7 @@ const Landing: React.FC = () => {
   ];
 
   return (
-    <div className="bg-white dark:bg-gray-900 transition-colors">
+    <div className="bg-white dark:bg-gray-900 min-h-screen transition-colors">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-blue-50 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 py-16 sm:py-24">
         <div className="container">
@@ -86,13 +86,13 @@ const Landing: React.FC = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-gray-900 dark:bg-gray-950">
+      <section className="py-16 bg-gray-900 dark:bg-black">
         <div className="container">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
                 <div className="text-3xl sm:text-4xl font-bold text-white mb-2">{stat.number}</div>
-                <div className="text-gray-300 dark:text-gray-400">{stat.label}</div>
+                <div className="text-gray-300">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -100,7 +100,7 @@ const Landing: React.FC = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 sm:py-24">
+      <section className="py-16 sm:py-24 bg-white dark:bg-gray-900">
         <div className="container">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -133,7 +133,7 @@ const Landing: React.FC = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 sm:py-24 bg-blue-50 dark:bg-gray-800">
+      <section className="py-16 sm:py-24 bg-blue-50 dark:bg-gray-800 transition-colors">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="animate-slide-up">
@@ -185,12 +185,12 @@ const Landing: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 sm:py-24 bg-gray-900 dark:bg-gray-950">
+      <section className="py-16 sm:py-24 bg-gray-900 dark:bg-black">
         <div className="container text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-white dark:text-gray-100 mb-6">
             Ready to Launch Your Startup?
           </h2>
-          <p className="text-xl text-gray-300 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
             Join thousands of entrepreneurs who've simplified their compliance journey with LaunchMate.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -200,7 +200,7 @@ const Landing: React.FC = () => {
               </Button>
             </Link>
             <Link to="/schemes">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto bg-white dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+              <Button variant="outline" size="lg" className="w-full sm:w-auto bg-white dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 border-white dark:border-gray-600">
                 Explore Funding Schemes
               </Button>
             </Link>

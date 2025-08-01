@@ -51,29 +51,29 @@ const Dashboard: React.FC = () => {
 
   const quickActions = [
     {
-      title: 'Continue Setup',
-      description: 'Complete your business setup wizard',
+      title: t('dashboard.continueSetup'),
+      description: t('dashboard.continueSetupDesc'),
       icon: Zap,
       link: '/wizard',
       color: 'bg-blue-500',
     },
     {
-      title: 'Track Approvals',
-      description: 'Check status of your applications',
+      title: t('dashboard.trackApprovals'),
+      description: t('dashboard.trackApprovalsDesc'),
       icon: CheckCircle,
       link: '/tracker',
       color: 'bg-green-500',
     },
     {
-      title: 'Find Schemes',
-      description: 'Discover funding opportunities',
+      title: t('dashboard.findSchemes'),
+      description: t('dashboard.findSchemesDesc'),
       icon: TrendingUp,
       link: '/schemes',
       color: 'bg-purple-500',
     },
     {
-      title: 'Compliance Calendar',
-      description: 'View upcoming deadlines',
+      title: t('dashboard.viewCalendar'),
+      description: t('dashboard.viewCalendarDesc'),
       icon: Calendar,
       link: '/calendar',
       color: 'bg-orange-500',
@@ -85,13 +85,13 @@ const Dashboard: React.FC = () => {
       return (
         <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0">
           <div className="text-center py-8">
-            <h2 className="text-2xl font-bold mb-4">Welcome to LaunchMate!</h2>
+            <h2 className="text-2xl font-bold mb-4">{t('dashboard.welcomeNew')}</h2>
             <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
-              Your one-stop solution for startup compliance in Delhi. Get started by completing our setup wizard to create your personalized compliance roadmap.
+              {t('dashboard.welcomeNewDesc')}
             </p>
             <Link to="/wizard">
               <Button className="bg-white text-blue-600 hover:bg-gray-100">
-                Start Setup Wizard
+                {t('landing.hero.cta')}
               </Button>
             </Link>
           </div>
@@ -121,15 +121,15 @@ const Dashboard: React.FC = () => {
         <div className="grid sm:grid-cols-3 gap-6">
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600 mb-1">{completedApprovals}</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Completed</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">{t('dashboard.completed')}</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-orange-600 mb-1">{pendingApprovals}</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Pending</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">{t('dashboard.pending')}</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600 mb-1">{state.schemes.length}</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Saved Schemes</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">{t('dashboard.savedSchemes')}</div>
           </div>
         </div>
 
@@ -152,7 +152,7 @@ const Dashboard: React.FC = () => {
 
         {/* Quick Actions */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{t('dashboard.quickActions')}</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {quickActions.map((action, index) => (
               <Link key={index} to={action.link}>
@@ -163,7 +163,7 @@ const Dashboard: React.FC = () => {
                     </div>
                   </div>
                   <h3 className="font-semibold text-gray-900 mb-2">{action.title}</h3>
-                  <p className="text-sm text-gray-600">{action.description}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">{action.description}</p>
                 </Card>
               </Link>
             ))}
@@ -176,9 +176,9 @@ const Dashboard: React.FC = () => {
             {/* Recent Activity */}
             <Card>
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-lg font-semibold text-gray-900">Recent Activity</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('dashboard.recentActivity')}</h3>
                 <Link to="/tracker" className="text-blue-600 hover:text-blue-700 text-sm font-medium">
-                  View All
+                  {t('tracker.viewAll')}
                 </Link>
               </div>
               <div className="space-y-4">
@@ -190,8 +190,8 @@ const Dashboard: React.FC = () => {
                       activity.type === 'scheme' ? 'bg-purple-500' : 'bg-gray-500'
                     }`} />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm text-gray-900">{activity.action}</p>
-                      <p className="text-xs text-gray-500">{activity.time}</p>
+                      <p className="text-sm text-gray-900 dark:text-white">{activity.action}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">{activity.time}</p>
                     </div>
                   </div>
                 ))}
@@ -201,15 +201,15 @@ const Dashboard: React.FC = () => {
             {/* Progress Overview */}
             {totalApprovals > 0 && (
               <Card>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Approval Progress</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('dashboard.approvalProgress')}</h3>
                 <div className="space-y-4">
                   {state.approvals.slice(0, 5).map((approval) => (
                     <div key={approval.id} className="flex items-center justify-between">
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-sm font-medium text-gray-900 truncate">
+                        <h4 className="text-sm font-medium text-gray-900 dark:text-white truncate">
                           {approval.name}
                         </h4>
-                        <p className="text-xs text-gray-500">{approval.department}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">{approval.department}</p>
                       </div>
                       <div className="flex items-center space-x-2">
                         {approval.status === 'approved' ? (
@@ -231,7 +231,7 @@ const Dashboard: React.FC = () => {
                   ))}
                   {state.approvals.length > 5 && (
                     <Link to="/tracker" className="block text-center text-blue-600 hover:text-blue-700 text-sm font-medium pt-2">
-                      View all {state.approvals.length} approvals →
+                      {t('tracker.viewAll')} {state.approvals.length} approvals →
                     </Link>
                   )}
                 </div>
@@ -244,14 +244,14 @@ const Dashboard: React.FC = () => {
             {/* Upcoming Deadlines */}
             <Card>
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">Upcoming Deadlines</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('dashboard.upcomingDeadlines')}</h3>
                 <Link to="/calendar" className="text-blue-600 hover:text-blue-700">
                   <Calendar className="h-5 w-5" />
                 </Link>
               </div>
               <div className="space-y-3">
                 {upcomingEvents.length === 0 ? (
-                  <p className="text-gray-500 text-sm">No upcoming deadlines</p>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm">{t('dashboard.noUpcomingDeadlines')}</p>
                 ) : (
                   upcomingEvents.map((event) => (
                     <div key={event.id} className="flex items-start space-x-3">
@@ -260,10 +260,10 @@ const Dashboard: React.FC = () => {
                         event.priority === 'medium' ? 'bg-yellow-500' : 'bg-green-500'
                       }`} />
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-sm font-medium text-gray-900 truncate">
+                        <h4 className="text-sm font-medium text-gray-900 dark:text-white truncate">
                           {event.title}
                         </h4>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
                           {new Date(event.date).toLocaleDateString()}
                         </p>
                       </div>
@@ -274,7 +274,7 @@ const Dashboard: React.FC = () => {
               {upcomingEvents.length > 0 && (
                 <Link to="/calendar">
                   <Button variant="outline" size="sm" className="w-full mt-4">
-                    View Calendar
+                    {t('dashboard.viewCalendar')}
                   </Button>
                 </Link>
               )}
@@ -283,46 +283,46 @@ const Dashboard: React.FC = () => {
             {/* Saved Schemes */}
             <Card>
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">Saved Schemes</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('dashboard.savedSchemes')}</h3>
                 <Link to="/schemes" className="text-blue-600 hover:text-blue-700">
                   <TrendingUp className="h-5 w-5" />
                 </Link>
               </div>
               <div className="space-y-3">
                 {state.schemes.length === 0 ? (
-                  <p className="text-gray-500 text-sm">No saved schemes yet</p>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm">{t('dashboard.noSavedSchemes')}</p>
                 ) : (
                   state.schemes.slice(0, 3).map((scheme) => (
-                    <div key={scheme.id} className="p-3 bg-gray-50 rounded-lg">
-                      <h4 className="text-sm font-medium text-gray-900 mb-1 truncate">
+                    <div key={scheme.id} className="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                      <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-1 truncate">
                         {scheme.name}
                       </h4>
-                      <p className="text-xs text-gray-600">{scheme.loanAmount}</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-300">{scheme.loanAmount}</p>
                     </div>
                   ))
                 )}
               </div>
               <Link to="/schemes">
                 <Button variant="outline" size="sm" className="w-full mt-4">
-                  Explore Schemes
+                  {t('dashboard.exploreSchemes')}
                 </Button>
               </Link>
             </Card>
 
             {/* Help & Support */}
             <Card>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Need Help?</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('dashboard.needHelp')}</h3>
               <div className="space-y-3">
                 <Link to="/chat">
                   <Button variant="outline" size="sm" className="w-full justify-start" icon={FileText}>
-                    AI Assistant
+                    {t('dashboard.aiAssistant')}
                   </Button>
                 </Link>
                 <Button variant="outline" size="sm" className="w-full justify-start" icon={FileText}>
-                  Help Center
+                  {t('dashboard.helpCenter')}
                 </Button>
                 <Button variant="outline" size="sm" className="w-full justify-start" icon={FileText}>
-                  Contact Support
+                  {t('dashboard.contactSupport')}
                 </Button>
               </div>
             </Card>

@@ -14,30 +14,30 @@ const AIAssistant: React.FC = () => {
   const predefinedQuestions = [
     {
       icon: HelpCircle,
-      question: 'How to register for GST?',
+      question: t('chat.gstQuestion') || 'How to register for GST?',
       category: 'GST & Tax',
     },
     {
       icon: FileText,
-      question: 'What licenses do I need for food business?',
+      question: t('chat.foodQuestion') || 'What licenses do I need for food business?',
       category: 'Licensing',
     },
     {
       icon: Search,
-      question: 'DPIIT recognition benefits?',
+      question: t('chat.dpiitQuestion') || 'DPIIT recognition benefits?',
       category: 'Startup Policy',
     },
     {
       icon: Calculator,
-      question: 'How long does MCA approval take?',
+      question: t('chat.mcaQuestion') || 'How long does MCA approval take?',
       category: 'Company Registration',
     },
   ];
 
   const quickActions = [
-    { icon: Calculator, label: 'Calculate Fees', action: 'calculate-fees' },
-    { icon: Search, label: 'Find Schemes', action: 'find-schemes' },
-    { icon: FileText, label: 'Check Status', action: 'check-status' },
+    { icon: Calculator, label: t('chat.calculateFees'), action: 'calculate-fees' },
+    { icon: Search, label: t('chat.findSchemes'), action: 'find-schemes' },
+    { icon: FileText, label: t('chat.checkStatus'), action: 'check-status' },
   ];
 
   // Bot responses for different queries
@@ -321,9 +321,9 @@ Ask me anything about starting your business in Delhi!`,
               <Bot className="h-8 w-8 text-white" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">AI Compliance Assistant</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{t('chat.title')}</h1>
           <p className="text-gray-600 dark:text-gray-300">
-            Get instant answers to your startup compliance questions
+            {t('chat.subtitle')}
           </p>
         </div>
 
@@ -333,7 +333,7 @@ Ask me anything about starting your business in Delhi!`,
             {/* Quick Questions */}
             {state.chatHistory.length <= 1 && (
               <Card>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Popular Questions</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('chat.popularQuestions')}</h3>
                 <div className="grid md:grid-cols-2 gap-3">
                   {predefinedQuestions.map((item, index) => (
                     <button
@@ -353,7 +353,8 @@ Ask me anything about starting your business in Delhi!`,
             )}
 
             {/* Chat Messages */}
-            <Card className="h-96 flex flex-col">
+            <Card className="h-[600px] flex flex-col overflow-hidden">
+            <Card className="min-h-[500px] max-h-[70vh] flex flex-col overflow-hidden">
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 {state.chatHistory.map((message) => (
                   <div
@@ -382,7 +383,7 @@ Ask me anything about starting your business in Delhi!`,
                           : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
                       }`}>
                         <div 
-                          className="text-sm whitespace-pre-wrap"
+                          className="text-xs whitespace-pre-wrap break-words"
                           dangerouslySetInnerHTML={{ __html: formatMessage(message.message) }}
                         />
                       </div>
@@ -418,7 +419,7 @@ Ask me anything about starting your business in Delhi!`,
                     type="text"
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
-                    placeholder="Ask me anything about startup compliance..."
+                    placeholder={t('chat.placeholder')}
                     className="flex-1 input-field"
                     onKeyPress={(e) => e.key === 'Enter' && sendMessage(inputMessage)}
                     disabled={isTyping}
@@ -428,7 +429,7 @@ Ask me anything about starting your business in Delhi!`,
                     disabled={!inputMessage.trim() || isTyping}
                     icon={Send}
                   >
-                    Send
+                    {t('chat.send')}
                   </Button>
                 </div>
               </div>
@@ -439,7 +440,7 @@ Ask me anything about starting your business in Delhi!`,
           <div className="space-y-6">
             {/* Quick Actions */}
             <Card>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('chat.quickActions')}</h3>
               <div className="space-y-3">
                 {quickActions.map((action, index) => (
                   <button
@@ -456,27 +457,27 @@ Ask me anything about starting your business in Delhi!`,
 
             {/* Help Topics */}
             <Card>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Help Topics</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('chat.helpTopics')}</h3>
               <div className="space-y-2 text-sm">
-                <p className="text-gray-600 dark:text-gray-300">• Company Registration</p>
-                <p className="text-gray-600 dark:text-gray-300">• GST Registration</p>
-                <p className="text-gray-600 dark:text-gray-300">• FSSAI License</p>
-                <p className="text-gray-600 dark:text-gray-300">• Trade License</p>
-                <p className="text-gray-600 dark:text-gray-300">• DPIIT Recognition</p>
-                <p className="text-gray-600 dark:text-gray-300">• Government Schemes</p>
-                <p className="text-gray-600 dark:text-gray-300">• Compliance Calendar</p>
-                <p className="text-gray-600 dark:text-gray-300">• Document Requirements</p>
+                <p className="text-gray-600 dark:text-gray-300">• {t('chat.companyRegistration') || 'Company Registration'}</p>
+                <p className="text-gray-600 dark:text-gray-300">• {t('chat.gstRegistration') || 'GST Registration'}</p>
+                <p className="text-gray-600 dark:text-gray-300">• {t('chat.fssaiLicense') || 'FSSAI License'}</p>
+                <p className="text-gray-600 dark:text-gray-300">• {t('chat.tradeLicense') || 'Trade License'}</p>
+                <p className="text-gray-600 dark:text-gray-300">• {t('chat.dpiitRecognition') || 'DPIIT Recognition'}</p>
+                <p className="text-gray-600 dark:text-gray-300">• {t('chat.governmentSchemes') || 'Government Schemes'}</p>
+                <p className="text-gray-600 dark:text-gray-300">• {t('chat.complianceCalendar') || 'Compliance Calendar'}</p>
+                <p className="text-gray-600 dark:text-gray-300">• {t('chat.documentRequirements') || 'Document Requirements'}</p>
               </div>
             </Card>
 
             {/* Contact Support */}
             <Card>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Need Human Help?</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{t('chat.needHumanHelp')}</h3>
               <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                For complex queries, reach out to our compliance experts.
+                {t('chat.complexQueries') || 'For complex queries, reach out to our compliance experts.'}
               </p>
               <Button variant="outline" size="sm" className="w-full">
-                Contact Support
+                {t('chat.contactSupport')}
               </Button>
             </Card>
           </div>

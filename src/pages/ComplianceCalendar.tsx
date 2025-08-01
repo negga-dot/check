@@ -205,15 +205,15 @@ const ComplianceCalendar: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 transition-colors">
+      <div className="container max-w-full">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
           <div className="p-6 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <Calendar className="w-8 h-8 text-blue-600 dark:text-blue-400" />
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {t('complianceCalendar')}
+                  {t('calendar.title')}
                 </h1>
               </div>
               
@@ -227,7 +227,7 @@ const ComplianceCalendar: React.FC = () => {
                         : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
                     }`}
                   >
-                    {t('month')}
+                    {t('calendar.month')}
                   </button>
                   <button
                     onClick={() => setView('week')}
@@ -237,7 +237,7 @@ const ComplianceCalendar: React.FC = () => {
                         : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
                     }`}
                   >
-                    {t('week')}
+                    {t('calendar.week')}
                   </button>
                 </div>
               </div>
@@ -260,7 +260,7 @@ const ComplianceCalendar: React.FC = () => {
                   onClick={() => setCurrentDate(new Date())}
                   className="px-3 py-1 text-sm font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-lg transition-colors"
                 >
-                  {t('today')}
+                  {t('common.today')}
                 </button>
                 <button
                   onClick={() => view === 'month' ? navigateMonth('next') : navigateWeek('next')}
@@ -272,13 +272,13 @@ const ComplianceCalendar: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-6">
+          <div className="p-2 sm:p-6 overflow-x-auto">
             {view === 'month' ? renderMonthView() : renderWeekView()}
           </div>
 
           <div className="p-6 border-t border-gray-200 dark:border-gray-700">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              {t('upcomingDeadlines')}
+              {t('calendar.upcomingDeadlines')}
             </h3>
             <div className="space-y-3">
               {events.filter(event => event.status === 'pending').map(event => (

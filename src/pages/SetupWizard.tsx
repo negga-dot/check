@@ -26,35 +26,35 @@ const SetupWizard: React.FC = () => {
     {
       id: 'manufacturing',
       title: t('wizard.business.manufacturing'),
-      description: 'Product manufacturing, assembly, or production business',
+      description: t('wizard.business.manufacturingDesc'),
       icon: Building,
       approvals: ['Udyam Registration', 'DPCC NOC', 'Factory License', 'GST Registration', 'Fire NOC', 'Labor License'],
     },
     {
       id: 'service',
       title: t('wizard.business.service'),
-      description: 'IT, consulting, professional services, or digital business',
+      description: t('wizard.business.serviceDesc'),
       icon: Briefcase,
       approvals: ['Company Registration', 'GST Registration', 'DPIIT Recognition', 'Professional Tax', 'ESI/PF Registration'],
     },
     {
       id: 'food',
       title: t('wizard.business.food'),
-      description: 'Restaurant, food processing, or catering business',
+      description: t('wizard.business.foodDesc'),
       icon: Utensils,
       approvals: ['FSSAI License', 'Trade License', 'GST Registration', 'Fire NOC', 'Health Permit', 'Water NOC'],
     },
     {
       id: 'export',
       title: t('wizard.business.export'),
-      description: 'Import/export or international trade business',
+      description: t('wizard.business.exportDesc'),
       icon: Package,
       approvals: ['IEC Code', 'GST Registration', 'Company Registration', 'RCMC Certificate', 'Bank Certificate'],
     },
     {
       id: 'retail',
       title: t('wizard.business.retail'),
-      description: 'Physical retail, e-commerce, or wholesale business',
+      description: t('wizard.business.retailDesc'),
       icon: Store,
       approvals: ['Trade License', 'GST Registration', 'Shop & Establishment', 'Fire NOC', 'Signage Permit'],
     },
@@ -180,66 +180,72 @@ const SetupWizard: React.FC = () => {
       </h2>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {businessTypes.map((type) => (
-          <Card
+          <button
             key={type.id}
-            hover
-            className={`cursor-pointer transition-all ${
-              formData.businessType === type.id ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-900/20' : ''
-            }`}
             onClick={() => setFormData({ ...formData, businessType: type.id })}
+            className="w-full"
           >
-            <div className="text-center">
-              <div className="mb-4 flex justify-center">
-                <div className={`p-3 rounded-xl ${
-                  formData.businessType === type.id ? 'bg-blue-500' : 'bg-gray-100 dark:bg-gray-700'
-                }`}>
-                  <type.icon className={`h-8 w-8 ${
-                    formData.businessType === type.id ? 'text-white' : 'text-gray-600 dark:text-gray-300'
-                  }`} />
+            <Card
+              hover
+              className={`cursor-pointer transition-all h-full bg-white dark:bg-gray-800 ${
+                formData.businessType === type.id 
+                  ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700' 
+                  : 'border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600'
+              }`}
+            >
+              <div className="text-center">
+                <div className="mb-4 flex justify-center">
+                  <div className={`p-3 rounded-xl transition-colors ${
+                    formData.businessType === type.id ? 'bg-blue-500' : 'bg-gray-100 dark:bg-gray-700'
+                  }`}>
+                    <type.icon className={`h-8 w-8 transition-colors ${
+                      formData.businessType === type.id ? 'text-white' : 'text-gray-600 dark:text-gray-300'
+                    }`} />
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{type.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{type.description}</p>
+                <div className="text-xs text-gray-500 dark:text-gray-400">
+                  <span className="font-medium">{type.approvals.length} {t('wizard.approvalsRequired')}</span>
                 </div>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{type.title}</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{type.description}</p>
-              <div className="text-xs text-gray-500 dark:text-gray-400">
-                <span className="font-medium">{type.approvals.length} approvals required</span>
-              </div>
-            </div>
-          </Card>
+            </Card>
+          </button>
         ))}
       </div>
     </div>
   );
 
   const renderStep2 = () => (
-    <div className="animate-fade-in max-w-2xl mx-auto">
+    <div className="animate-fade-in max-w-2xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700">
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
         {t('wizard.step2.title')}
       </h2>
       <div className="space-y-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Company Name *
+            {t('wizard.form.companyName')} *
           </label>
           <input
             type="text"
             className="input-field"
             value={formData.companyName}
             onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-            placeholder="Enter your company name"
+            placeholder={t('wizard.form.enterCompanyName')}
             required
           />
         </div>
         
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Business Address *
+            {t('wizard.form.businessAddress')} *
           </label>
           <textarea
             className="input-field resize-none"
             rows={3}
             value={formData.address}
             onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-            placeholder="Enter your business address in Delhi"
+            placeholder={t('wizard.form.enterAddress')}
             required
           />
         </div>
@@ -247,46 +253,46 @@ const SetupWizard: React.FC = () => {
         <div className="grid sm:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Business Sector
+              {t('wizard.form.businessSector')}
             </label>
             <select
               className="input-field"
               value={formData.sector}
               onChange={(e) => setFormData({ ...formData, sector: e.target.value })}
             >
-              <option value="">Select sector</option>
-              <option value="technology">Technology</option>
-              <option value="healthcare">Healthcare</option>
-              <option value="education">Education</option>
-              <option value="finance">Finance</option>
-              <option value="retail">Retail</option>
-              <option value="manufacturing">Manufacturing</option>
-              <option value="food">Food & Beverage</option>
-              <option value="other">Other</option>
+              <option value="">{t('wizard.form.selectSector')}</option>
+              <option value="technology">{t('common.technology')}</option>
+              <option value="healthcare">{t('common.healthcare')}</option>
+              <option value="education">{t('common.education')}</option>
+              <option value="finance">{t('common.finance')}</option>
+              <option value="retail">{t('common.retail')}</option>
+              <option value="manufacturing">{t('common.manufacturing')}</option>
+              <option value="food">{t('common.food')}</option>
+              <option value="other">{t('common.other')}</option>
             </select>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Expected Investment
+              {t('wizard.form.expectedInvestment')}
             </label>
             <select
               className="input-field"
               value={formData.investment}
               onChange={(e) => setFormData({ ...formData, investment: e.target.value })}
             >
-              <option value="">Select range</option>
-              <option value="under-10l">Under ₹10 Lakhs</option>
-              <option value="10l-1cr">₹10 Lakhs - ₹1 Crore</option>
-              <option value="1cr-5cr">₹1 Crore - ₹5 Crores</option>
-              <option value="above-5cr">Above ₹5 Crores</option>
+              <option value="">{t('wizard.form.selectRange')}</option>
+              <option value="under-10l">{t('common.under10l')}</option>
+              <option value="10l-1cr">{t('common.10lto1cr')}</option>
+              <option value="1cr-5cr">{t('common.1crto5cr')}</option>
+              <option value="above-5cr">{t('common.above5cr')}</option>
             </select>
           </div>
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Number of Founders
+            {t('wizard.form.numberOfFounders')}
           </label>
           <input
             type="number"
@@ -306,17 +312,17 @@ const SetupWizard: React.FC = () => {
     if (!selectedType) return null;
 
     return (
-      <div className="animate-fade-in">
+      <div className="animate-fade-in bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
           {t('wizard.step3.title')} for {selectedType.title}
         </h2>
         <div className="max-w-4xl mx-auto">
           <div className="grid md:grid-cols-2 gap-6">
             {selectedType.approvals.map((approval, index) => (
-              <Card key={index} className="flex items-start space-x-4">
+              <Card key={index} className="flex items-start space-x-4 bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600">
                 <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                    <span className="text-sm font-semibold text-blue-600">{index + 1}</span>
+                  <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                    <span className="text-sm font-semibold text-blue-600 dark:text-blue-400">{index + 1}</span>
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -332,16 +338,16 @@ const SetupWizard: React.FC = () => {
               </Card>
             ))}
           </div>
-          <Card className="mt-8 bg-blue-50 border-blue-200">
+          <Card className="mt-8 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700">
             <div className="text-center">
               <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-2">
-                Estimated Total Timeline
+                {t('wizard.estimatedTimeline')}
               </h3>
               <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                2-4 months
+                {t('wizard.timelineMonths')}
               </p>
               <p className="text-sm text-blue-700 dark:text-blue-300">
-                With LaunchMate's guidance, you can reduce this by 60% and track everything in real-time
+                {t('wizard.timelineDescription')}
               </p>
             </div>
           </Card>
@@ -351,45 +357,45 @@ const SetupWizard: React.FC = () => {
   };
 
   const renderStep4 = () => (
-    <div className="animate-fade-in text-center max-w-2xl mx-auto">
+    <div className="animate-fade-in text-center max-w-2xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-xl border border-gray-200 dark:border-gray-700">
       <div className="mb-8">
         <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
           {t('wizard.step4.title')}
         </h2>
         <p className="text-lg text-gray-600 dark:text-gray-300">
-          We've created a personalized compliance roadmap for your {businessTypes.find(t => t.id === formData.businessType)?.title.toLowerCase()}.
+          {t('wizard.planReady')} {businessTypes.find(t => t.id === formData.businessType)?.title.toLowerCase()}.
         </p>
       </div>
 
       <div className="space-y-6">
-        <Card className="text-left">
-          <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Next Steps:</h3>
+        <Card className="text-left bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600">
+          <h3 className="font-semibold text-gray-900 dark:text-white mb-4">{t('wizard.nextSteps')}:</h3>
           <div className="space-y-3">
             <div className="flex items-center space-x-3">
-              <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
-                <span className="text-xs font-semibold text-green-600">1</span>
+              <div className="w-6 h-6 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
+                <span className="text-xs font-semibold text-green-600 dark:text-green-400">1</span>
               </div>
-              <span className="text-gray-700 dark:text-gray-300">Review your approval tracker dashboard</span>
+              <span className="text-gray-700 dark:text-gray-300">{t('wizard.step1Description')}</span>
             </div>
             <div className="flex items-center space-x-3">
-              <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
-                <span className="text-xs font-semibold text-blue-600">2</span>
+              <div className="w-6 h-6 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                <span className="text-xs font-semibold text-blue-600 dark:text-blue-400">2</span>
               </div>
-              <span className="text-gray-700 dark:text-gray-300">Start gathering required documents</span>
+              <span className="text-gray-700 dark:text-gray-300">{t('wizard.step2Description')}</span>
             </div>
             <div className="flex items-center space-x-3">
-              <div className="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center">
-                <span className="text-xs font-semibold text-orange-600">3</span>
+              <div className="w-6 h-6 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center">
+                <span className="text-xs font-semibold text-orange-600 dark:text-orange-400">3</span>
               </div>
-              <span className="text-gray-700 dark:text-gray-300">Explore funding schemes and apply</span>
+              <span className="text-gray-700 dark:text-gray-300">{t('wizard.step3Description')}</span>
             </div>
           </div>
         </Card>
 
         <div className="flex flex-col sm:flex-row gap-4">
           <Button onClick={handleComplete} className="flex-1" icon={ArrowRight} iconPosition="right">
-            Go to Approval Tracker
+            {t('wizard.goToTracker')}
           </Button>
         </div>
       </div>
@@ -412,7 +418,7 @@ const SetupWizard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 transition-colors">
       <div className="container max-w-6xl">
         <div className="mb-8">
           <ProgressBar current={currentStep} total={4} className="max-w-md mx-auto" />
@@ -441,7 +447,7 @@ const SetupWizard: React.FC = () => {
               icon={ArrowRight}
               iconPosition="right"
             >
-              {currentStep === 3 ? 'Create Plan' : t('common.next')}
+              {currentStep === 3 ? t('wizard.createPlan') : t('common.next')}
             </Button>
           </div>
         )}
